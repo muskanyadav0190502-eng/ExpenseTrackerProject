@@ -7,7 +7,6 @@ import QuickAdd from './components/QuickAdd';
 import ExpenseChallenges from './components/ExpenseChallenges';
 import ShareExpenses from './components/ShareExpenses';
 import LoadingSpinner from './components/LoadingSpinner';
-import ConnectionTest from './components/ConnectionTest';
 import expenseService from './services/expenseService';
 import './App.css';
 

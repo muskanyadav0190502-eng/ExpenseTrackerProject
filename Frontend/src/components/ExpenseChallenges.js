@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './ExpenseChallenges.css';
 
 const ExpenseChallenges = ({ expenses }) => {
@@ -58,12 +58,22 @@ const ExpenseChallenges = ({ expenses }) => {
     }
   }, []);
 
-  useEffect(() => {
-    // Check challenge progress when expenses change
-    checkChallengeProgress();
-  }, [expenses, challenges]);
+  const completeChallenge = useCallback((challenge) => {
+    const completed = {
+      ...challenge,
+      completedDate: new Date().toISOString().split('T')[0]
+    };
+    const updatedCompleted = [...completedChallenges, completed];
+    setCompletedChallenges(updatedCompleted);
+    localStorage.setItem('completedChallenges', JSON.stringify(updatedCompleted));
+    
+    // Remove from active challenges
+    const updatedChallenges = challenges.filter(c => c.id !== challenge.id);
+    setChallenges(updatedChallenges);
+    localStorage.setItem('activeChallenges', JSON.stringify(updatedChallenges));
+  }, [challenges, completedChallenges]);
 
-  const checkChallengeProgress = () => {
+  const checkChallengeProgress = useCallback(() => {
     const updatedChallenges = challenges.map(challenge => {
       const startDate = new Date(challenge.startDate);
       const today = new Date();
@@ -110,7 +120,12 @@ const ExpenseChallenges = ({ expenses }) => {
       setChallenges(updatedChallenges);
       localStorage.setItem('activeChallenges', JSON.stringify(updatedChallenges));
     }
-  };
+  }, [expenses, challenges, completeChallenge]);
+
+  useEffect(() => {
+    // Check challenge progress when expenses change
+    checkChallengeProgress();
+  }, [expenses, challenges, checkChallengeProgress]);
 
   const getDailyExpenses = (expenses, days) => {
     const dailyTotals = {};
@@ -128,21 +143,6 @@ const ExpenseChallenges = ({ expenses }) => {
       daysPassed: 0
     };
     const updatedChallenges = [...challenges, newChallenge];
-    setChallenges(updatedChallenges);
-    localStorage.setItem('activeChallenges', JSON.stringify(updatedChallenges));
-  };
-
-  const completeChallenge = (challenge) => {
-    const completed = {
-      ...challenge,
-      completedDate: new Date().toISOString().split('T')[0]
-    };
-    const updatedCompleted = [...completedChallenges, completed];
-    setCompletedChallenges(updatedCompleted);
-    localStorage.setItem('completedChallenges', JSON.stringify(updatedCompleted));
-    
-    // Remove from active challenges
-    const updatedChallenges = challenges.filter(c => c.id !== challenge.id);
     setChallenges(updatedChallenges);
     localStorage.setItem('activeChallenges', JSON.stringify(updatedChallenges));
   };
