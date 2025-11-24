@@ -1,0 +1,80 @@
+.connection-test {
+  background: var(--card-bg);
+  border: 2px dashed var(--border-color);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.connection-test h4 {
+  margin-top: 0;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.test-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.test-buttons button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.test-buttons button:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.test-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.test-status {
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.test-status.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.test-status.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.test-info {
+  background: var(--form-bg);
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.test-info p {
+  margin: 0.5rem 0;
+  color: var(--text-color);
+}
+
+.test-info code {
+  display: block;
+  background: var(--card-bg);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  color: var(--primary-color);
+  font-family: 'Courier New', monospace;
+}
